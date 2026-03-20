@@ -163,4 +163,7 @@ public class Agent {
      */
     private Agent() {
     }
+    public static long getAppPid(){
+        	return ProcessHandle.current().pid();
+    }
 }

@@ -55,4 +55,13 @@ public interface ResultWriter {
 	 * @throws IOException in case of error
 	 */
 	void write(String methodName, double methodPower) throws IOException;
+
+
+    default void write(String key,
+                       double energy,
+                       double estInvocations,
+                       double selfTimeMs,
+                       double totalTimeMs) throws IOException {
+        write(key, energy); // fallback for writers that don't care
+    }
 }

@@ -90,4 +90,17 @@ public class CsvResultWriter implements ResultWriter {
 
 		writer.write(String.format(Locale.US, "%s,%.4f%n", methodName, methodPower));
 	}
+    @Override
+    public void write(String key,
+                      double energy,
+                      double estInvocations,
+                      double selfTimeMs,
+                      double totalTimeMs) throws IOException {
+        // Example CSV layout:
+        // Method,EnergyJ,EstInvocations,TopSamples,EstSelfTimeMs
+
+        final BufferedWriter writer = this.writer.get();
+        writer.write(String.format(Locale.US, "%s,%.6f,%.0f,%.1f,%.1f%n", key, energy, estInvocations, selfTimeMs, totalTimeMs));
+    }
+
 }

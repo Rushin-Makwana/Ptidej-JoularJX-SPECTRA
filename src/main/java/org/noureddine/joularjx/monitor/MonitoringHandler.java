@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2026, Adel Noureddine, Université de Pau et des Pays de l'Adour.
+ * Copyright (c) 2021-2026, Adel Noureddine, UniversitÃ© de Pau et des Pays de l'Adour.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the
  * GNU General Public License v3.0 only (GPL-3.0-only)
@@ -12,15 +12,19 @@ package org.noureddine.joularjx.monitor;
 
 import java.io.IOException;
 import java.lang.management.ThreadMXBean;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.ObjDoubleConsumer;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.bcel.classfile.*;
+import org.apache.bcel.generic.Type;
+import org.apache.bcel.util.SyntheticRepository;
+
+
 
 import org.noureddine.joularjx.Agent;
 import org.noureddine.joularjx.cpu.Cpu;
@@ -41,185 +45,292 @@ import com.sun.management.OperatingSystemMXBean;
  */
 public class MonitoringHandler implements Runnable {
 
-	private static final String DESTROY_THREAD_NAME = "DestroyJavaVM";
-	private static final Logger logger = JoularJXLogging.getLogger();
+    private static final String DESTROY_THREAD_NAME = "DestroyJavaVM";
+    private static final Logger logger = JoularJXLogging.getLogger();
 
-	private final long appPid;
-	private final AgentProperties properties;
-	private final List<ResultWriter> resultWriters;
-	private final Cpu cpu;
-	private final MonitoringStatus status;
-	private final OperatingSystemMXBean osBean;
-	private final ThreadMXBean threadBean;
-	private final long sampleTimeMilliseconds = 1000;
-	private final long sampleRateMilliseconds;
-	private final int sampleIterations;
+    private final long appPid;
+    private final AgentProperties properties;
+    private final List<ResultWriter> resultWriters;
+    private final Cpu cpu;
+    private final MonitoringStatus status;
+    private final OperatingSystemMXBean osBean;
+    private final ThreadMXBean threadBean;
+    private final long sampleTimeMilliseconds = 2000;
+    private final long sampleRateMilliseconds;
+    private final int sampleIterations;
+    private final Map<String, MethodStats> methodStats = new ConcurrentHashMap<>();
+    private final long samplingPeriodMillis;
+    private static final Map<String, String> resolvedKeyCache = new ConcurrentHashMap<>();
 
-	/**
-	 * Creates a new MonitoringHandler.
-	 *
-	 * @param appPid        the PID of the monitored application
-	 * @param properties    the agent's configuration properties
-	 * @param resultWriters the writers that will be used to save data in files
-	 * @param cpu           an implementation of the CPU interface, depending on the
-	 *                      OS and hardware
-	 * @param status        where all the runtime data will be saved
-	 * @param osBean        the OperatingSystemMXBean, used to collect CPU and
-	 *                      process loads
-	 * @param threadBean    the ThreadMXBean, used to collect thread CPU time
-	 */
-	public MonitoringHandler(long appPid, AgentProperties properties, List<ResultWriter> resultWriters, Cpu cpu,
-			MonitoringStatus status, OperatingSystemMXBean osBean, ThreadMXBean threadBean) {
-		this.appPid = appPid;
-		this.properties = properties;
-		this.resultWriters = resultWriters;
-		this.cpu = cpu;
-		this.status = status;
-		this.osBean = osBean;
-		this.threadBean = threadBean;
-		this.sampleRateMilliseconds = properties.stackMonitoringSampleRate();
-		this.sampleIterations = (int) (sampleTimeMilliseconds / sampleRateMilliseconds);
-	}
+    /**
+     * Creates a new MonitoringHandler.
+     *
+     * @param appPid        the PID of the monitored application
+     * @param properties    the agent's configuration properties
+     * @param resultWriters the writers that will be used to save data in files
+     * @param cpu           an implementation of the CPU interface, depending on the
+     *                      OS and hardware
+     * @param status        where all the runtime data will be saved
+     * @param osBean        the OperatingSystemMXBean, used to collect CPU and
+     *                      process loads
+     * @param threadBean    the ThreadMXBean, used to collect thread CPU time
+     */
+    public MonitoringHandler(long appPid, AgentProperties properties, List<ResultWriter> resultWriters, Cpu cpu,
+                             MonitoringStatus status, OperatingSystemMXBean osBean, ThreadMXBean threadBean) {
+        logger.info("MonitoringHandler created for appPid=" + appPid);
+        this.appPid = appPid;
+        this.properties = properties;
+        this.resultWriters = resultWriters;
+        this.cpu = cpu;
+        this.status = status;
+        this.osBean = osBean;
+        this.threadBean = threadBean;
+        this.sampleRateMilliseconds = properties.stackMonitoringSampleRate();
+        this.sampleIterations = (int) (sampleTimeMilliseconds / sampleRateMilliseconds);
+        this.samplingPeriodMillis = sampleTimeMilliseconds;
+    }
 
-	/**
-	 * Calculate process energy consumption
-	 *
-	 * @param totalCpuUsage   Total CPU usage
-	 * @param processCpuUsage Process CPU usage
-	 * @param cpuEnergy       CPU energy
-	 * @return Process energy consumption
-	 */
-	private double calculateProcessCpuEnergy(double totalCpuUsage, double processCpuUsage, double cpuEnergy) {
-		return (processCpuUsage * cpuEnergy) / totalCpuUsage;
-	}
+    private String toMethodKey(StackTraceElement ste) {
+//        if (Thread.currentThread().getName().contains("surefire") ||
+//                ste.getClassName().startsWith("org.apache.maven.surefire")) {
+//            return ste.getClassName() + "." + ste.getMethodName() + "()";
+//        }
+        return resolveMethodKey(ste.getClassName(), ste.getMethodName(), ste.getLineNumber());
+//        String descriptor = "()"; // or "()V" â€” enough for matching
+//        return MethodInstrumentation.buildKey(ste.getClassName().replace('.', '/'),
+//                ste.getMethodName(),
+//                descriptor);
+    }
 
-	/**
-	 * Indicate if the JVM is destroying
-	 *
-	 * @return true if the JVM destroying thread is present, false otherwise
-	 */
-	private boolean destroyingVM() {
-		if (!this.properties.isApplicationServer()) {
-			return Thread.getAllStackTraces().keySet().stream()
-					.anyMatch(thread -> thread.getName().equals(DESTROY_THREAD_NAME));
-		} else {
-			return false;
-		}
-	}
 
-	/**
-	 * Returns the occurences of each call tree during monitoring loop, per thread.
-	 *
-	 * @param samples the result of the sampling step. A List of StackTraces of each
-	 *                Thread.
-	 * @param filter  a Predicate, used to filter method names within the call tree.
-	 * @return for each Thread, a Map of each CallTree and its occurences during the
-	 *         last monitoring loop.
-	 */
-	private Map<Thread, Map<CallTree, Integer>> extractCallTreesStats(Map<Thread, List<StackTraceElement[]>> samples,
-			Predicate<String> filter) {
-		Map<Thread, Map<CallTree, Integer>> stats = new HashMap<>();
+    private StackTraceElement selectTopApplicationFrame(StackTraceElement[] stack) {
+        for (StackTraceElement ste : stack) {
+            String cls = ste.getClassName();
+            if (cls.startsWith("org.noureddine.")) {
+                return ste;
+            }
 
-		for (var entry : samples.entrySet()) {
-			Map<CallTree, Integer> target = new HashMap<>();
-			stats.put(entry.getKey(), target);
+            return ste;
+        }
+        return null;
+    }
 
-			for (var stackTraceEntry : entry.getValue()) {
-				List<StackTraceElement> stackTrace = StackTraceFilter.filter(stackTraceEntry, filter);
-				if (!stackTrace.isEmpty()) {
-					target.merge(new CallTree(stackTrace), 1, Integer::sum);
-				}
-			}
-		}
 
-		return stats;
-	}
+    /**
+     * Calculate process energy consumption
+     *
+     * @param totalCpuUsage   Total CPU usage
+     * @param processCpuUsage Process CPU usage
+     * @param cpuEnergy       CPU energy
+     * @return Process energy consumption
+     */
+    private double calculateProcessCpuEnergy(double totalCpuUsage, double processCpuUsage, double cpuEnergy) {
+        return (processCpuUsage * cpuEnergy) / totalCpuUsage;
+    }
 
-	/**
-	 * Return the occurrences of each method call during monitoring loop, per
-	 * thread.
-	 *
-	 * @param samples the result of the sampling step. A List of StackTraces of each
-	 *                Thread
-	 * @param covers  a Predicate, used to filter method names
-	 * @return for each Thread, a Map of each method and its occurrences during the
-	 *         last monitoring loop
-	 */
-	private Map<Thread, Map<String, Integer>> extractStats(Map<Thread, List<StackTraceElement[]>> samples,
-			Predicate<String> covers) {
-		Map<Thread, Map<String, Integer>> stats = new HashMap<>();
+    /**
+     * Indicate if the JVM is destroying
+     *
+     * @return true if the JVM destroying thread is present, false otherwise
+     */
+    private boolean destroyingVM() {
+        if (!this.properties.isApplicationServer()) {
+            return Thread.getAllStackTraces().keySet().stream()
+                    .anyMatch(thread -> thread.getName().equals(DESTROY_THREAD_NAME));
+        } else {
+            return false;
+        }
+    }
 
-		for (var entry : samples.entrySet()) {
-			Map<String, Integer> target = new HashMap<>();
-			stats.put(entry.getKey(), target);
+    /**
+     * Returns the occurences of each call tree during monitoring loop, per thread.
+     *
+     * @param samples the result of the sampling step. A List of StackTraces of each
+     *                Thread.
+     * @param filter  a Predicate, used to filter method names within the call tree.
+     * @return for each Thread, a Map of each CallTree and its occurences during the
+     *         last monitoring loop.
+     */
+    private Map<Thread, Map<CallTree, Integer>> extractCallTreesStats(Map<Thread, List<StackTraceElement[]>> samples,
+                                                                      Predicate<String> filter) {
+        Map<Thread, Map<CallTree, Integer>> stats = new HashMap<>();
 
-			for (StackTraceElement[] stackTrace : entry.getValue()) {
-				for (StackTraceElement stackTraceElement : stackTrace) {
-					String methodName = stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName();
-					if (covers.test(methodName)) {
-						target.merge(methodName, 1, Integer::sum);
-						break;
-					}
-				}
-			}
-		}
+        for (var entry : samples.entrySet()) {
+            Map<CallTree, Integer> target = new HashMap<>();
+            stats.put(entry.getKey(), target);
 
-		return stats;
-	}
+            for (var stackTraceEntry : entry.getValue()) {
+                List<StackTraceElement> stackTrace = StackTraceFilter.filter(stackTraceEntry, filter);
+                if (!stackTrace.isEmpty()) {
+                    target.merge(new CallTree(stackTrace), 1, Integer::sum);
+                }
+            }
+        }
 
-	/**
-	 * Updates the CPU times for each Thread. Returns for each thread (PID) it's
-	 * percentage of CPU time used
-	 *
-	 * @param methodsStats   a map of method occurrences for each thread
-	 * @param threadsCpuTime a map of CPU time per PID, contains the cpu time for
-	 *                       each tread, resulting from the last call to
-	 *                       getThreadCpuTime(threadId)
-	 * @param processEnergy  the energy consumed by the process in the last
-	 *                       monitoring period
-	 * @return for each PID, the percentage of energy used by the associated thread
-	 */
-	private Map<Long, Double> getThreadsCpuTimePercentage(Map<Thread, Map<String, Integer>> methodsStats,
-			Map<Long, Long> threadsCpuTime, double processEnergy) {
-		Map<Long, Double> threadsCpuTimePercentage = new HashMap<>();
+        return stats;
+    }
 
-		Map<Long, Double> actualThreadsCpuTime = new HashMap<>();
-		double totalThreadsCpuTime = 0;
-		// first compute the proportion of cpu time for each thread in the last sampling
-		// period
-		for (Entry<Thread, Map<String, Integer>> threadEntry : methodsStats.entrySet()) {
-			long threadId = threadEntry.getKey().getId(); // Is deprecated in Java 19, use threadId() instead
-			long currentThreadCpuTime = threadBean.getThreadCpuTime(threadId);
-			long previousThreadCpuTime = threadsCpuTime.getOrDefault(threadId, 0l);
-			if (currentThreadCpuTime < 0) { // thread has quit
-				// TODO ignore last sampling period??
-				long jump = this.sampleRateMilliseconds / 10;
-				currentThreadCpuTime = previousThreadCpuTime + jump; // assume interval of 1 millisecond
-				logger.info("Thread CPU time negative, taking previous time + " + jump + " : " + currentThreadCpuTime
-						+ " for thread: " + threadId);
-			}
+    /**
+     * Return the occurrences of each method call during monitoring loop, per
+     * thread.
+     *
+     * @param samples the result of the sampling step. A List of StackTraces of each
+     *                Thread
+     * @param covers  a Predicate, used to filter method names
+     * @return for each Thread, a Map of each method and its occurrences during the
+     *         last monitoring loop
+     */
+    private Map<Thread, Map<String, Integer>> extractStats(
+            Map<Thread, List<StackTraceElement[]>> samples,
+            Predicate<String> covers) {
 
-			threadsCpuTime.put(threadId, currentThreadCpuTime);
-			long delta = currentThreadCpuTime - previousThreadCpuTime;
-			double adjustedThreadCpuTime = delta * threadEntry.getValue().values().stream().mapToDouble(i -> i).sum()
-					/ sampleIterations;
-			totalThreadsCpuTime += adjustedThreadCpuTime;
-			actualThreadsCpuTime.put(threadId, adjustedThreadCpuTime);
-		}
+        Map<Thread, Map<String, Integer>> stats = new HashMap<>();
 
-		// compute the proportion of total energy consumed by the thread using its
-		// proportion of cpu time in the last sampling period
-		for (Entry<Long, Double> threadEntry : actualThreadsCpuTime.entrySet()) {
-			double threadEnergy = totalThreadsCpuTime > 0d
-					? threadEntry.getValue() * processEnergy / totalThreadsCpuTime
-					: 0d;
-			threadsCpuTimePercentage.put(threadEntry.getKey(), threadEnergy);
-		}
+        for (var entry : samples.entrySet()) {
+            Map<String, Integer> target = new HashMap<>();
+            stats.put(entry.getKey(), target);
 
-		return threadsCpuTimePercentage;
-	}
+            for (StackTraceElement[] stackTrace : entry.getValue()) {
+                for (StackTraceElement ste : stackTrace) {
+                    if( ste.getMethodName().contains("padl.creator.classfile.relationship.DeepMethodInvocationAnalyzer.makeCouple("))
+                    {
+                        logger.info("Found method " + ste.toString());
+                    }
+                    String methodName = toMethodKey(ste);
+                    if (covers.test(methodName)) {
+                        target.merge(methodName, 1, Integer::sum);
+                    }
+                }
+            }
+        }
 
-	  @Override
+        return stats;
+    }
+
+    public static String resolve(Class<?> clazz, String methodName, int lineNumber) {
+        JavaClass javaClass;
+        try {
+            SyntheticRepository repo = SyntheticRepository.getInstance();
+            javaClass = repo.loadClass(clazz.getName());
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+
+        String className = javaClass.getClassName();
+
+        for (Method method : javaClass.getMethods()) {
+            LineNumberTable lineNumberTable = method.getLineNumberTable();
+            if (lineNumberTable == null) continue;
+
+            LineNumber[] lineNumbers = lineNumberTable.getLineNumberTable();
+            if (lineNumbers.length == 0) continue;
+
+            int startLine = lineNumbers[0].getLineNumber();
+            int endLine   = lineNumbers[lineNumbers.length - 1].getLineNumber();
+
+            if (method.getName().equals(methodName)
+                    && lineNumber >= startLine && lineNumber <= endLine) {
+
+                Type[] argTypes = method.getArgumentTypes();
+                String[] paramTypeNames = new String[argTypes.length];
+                for (int i = 0; i < argTypes.length; i++) {
+                    paramTypeNames[i] = bcelToJavaType(argTypes[i]);  // see below
+                }
+
+                return MethodKeyUtil.canonicalKey(className, methodName, paramTypeNames);
+            }
+        }
+        return null;
+    }
+    private static String bcelToJavaType(org.apache.bcel.generic.Type t) {
+        if (t.equals(Type.INT)) return "int";
+        if (t.equals(Type.BOOLEAN)) return "boolean";
+        if (t.equals(Type.CHAR)) return "char";
+        if (t.equals(Type.BYTE)) return "byte";
+        if (t.equals(Type.SHORT)) return "short";
+        if (t.equals(Type.LONG)) return "long";
+        if (t.equals(Type.FLOAT)) return "float";
+        if (t.equals(Type.DOUBLE)) return "double";
+        if (t instanceof org.apache.bcel.generic.ArrayType) {
+            org.apache.bcel.generic.ArrayType at = (org.apache.bcel.generic.ArrayType) t;
+            return bcelToJavaType(at.getBasicType()) + "[]".repeat(at.getDimensions());
+        }
+        // Object types
+        return t.toString(); // e.g., "java.lang.String"
+    }
+
+    private final Map<String, String> methodSigCache = new ConcurrentHashMap<>();
+
+    private String resolveFullSignature(String className, String methodName) {
+        String key = className + "." + methodName;
+        return methodSigCache.computeIfAbsent(key, k -> {
+            try {
+                Class<?> cls = Class.forName(className);
+                // Find matching method (heuristic: longest name or param count)
+                java.lang.reflect.Method[] methods = cls.getDeclaredMethods();
+                return Arrays.stream(methods)
+                        .filter(m -> m.getName().equals(methodName))
+                        .max(Comparator.comparingInt(m -> m.getParameterCount()))
+                        .map(m -> m.getName() + m.getParameterTypes().length)
+                        .orElse(methodName);
+            } catch (ClassNotFoundException e) {
+                return methodName;
+            }
+        });
+    }
+    /**
+     * Updates the CPU times for each Thread. Returns for each thread (PID) it's
+     * percentage of CPU time used
+     *
+     * @param methodsStats   a map of method occurrences for each thread
+     * @param threadsCpuTime a map of CPU time per PID, contains the cpu time for
+     *                       each tread, resulting from the last call to
+     *                       getThreadCpuTime(threadId)
+     * @param processEnergy  the energy consumed by the process in the last
+     *                       monitoring period
+     * @return for each PID, the percentage of energy used by the associated thread
+     */
+    private Map<Long, Double> getThreadsCpuTimePercentage(Map<Thread, Map<String, Integer>> methodsStats,
+                                                          Map<Long, Long> threadsCpuTime, double processEnergy) {
+        Map<Long, Double> threadsCpuTimePercentage = new HashMap<>();
+
+        Map<Long, Double> actualThreadsCpuTime = new HashMap<>();
+        double totalThreadsCpuTime = 0;
+        // first compute the proportion of cpu time for each thread in the last sampling
+        // period
+        for (Entry<Thread, Map<String, Integer>> threadEntry : methodsStats.entrySet()) {
+            long threadId = threadEntry.getKey().getId(); // Is deprecated in Java 19, use threadId() instead
+            long currentThreadCpuTime = threadBean.getThreadCpuTime(threadId);
+            long previousThreadCpuTime = threadsCpuTime.getOrDefault(threadId, 0l);
+            if (currentThreadCpuTime < 0) { // thread has quit
+                // TODO ignore last sampling period??
+                long jump = this.sampleRateMilliseconds / 10;
+                currentThreadCpuTime = previousThreadCpuTime + jump; // assume interval of 1 millisecond
+                logger.info("Thread CPU time negative, taking previous time + " + jump + " : " + currentThreadCpuTime
+                        + " for thread: " + threadId);
+            }
+
+            threadsCpuTime.put(threadId, currentThreadCpuTime);
+            long delta = currentThreadCpuTime - previousThreadCpuTime;
+            double adjustedThreadCpuTime = delta * threadEntry.getValue().values().stream().mapToDouble(i -> i).sum()
+                    / sampleIterations;
+            totalThreadsCpuTime += adjustedThreadCpuTime;
+            actualThreadsCpuTime.put(threadId, adjustedThreadCpuTime);
+        }
+
+        // compute the proportion of total energy consumed by the thread using its
+        // proportion of cpu time in the last sampling period
+        for (Entry<Long, Double> threadEntry : actualThreadsCpuTime.entrySet()) {
+            double threadEnergy = totalThreadsCpuTime > 0d
+                    ? threadEntry.getValue() * processEnergy / totalThreadsCpuTime
+                    : 0d;
+            threadsCpuTimePercentage.put(threadEntry.getKey(), threadEnergy);
+        }
+
+        return threadsCpuTimePercentage;
+    }
+
+    @Override
     public void run() {
         logger.log(Level.INFO, String.format("Started monitoring application with ID %d", appPid));
 
@@ -267,6 +378,61 @@ public class MonitoringHandler implements Runnable {
                 // Adds current power to total energy
                 status.addConsumedEnergy(processEnergy);
 
+                // === SAMPLING-BASED PER-METHOD STATS ===
+                // Distribute processEnergy over sampled threads + record time proxies
+                logger.info("methodStats size after sampling = " + methodStats.size());
+
+                if (samples.size() > 0 && processEnergy > 0d) {
+                    double perThreadEnergy = processEnergy / samples.size();
+
+                    for (var entry : samples.entrySet()) {
+                        List<StackTraceElement[]> threadStacks = entry.getValue();
+
+                        for (StackTraceElement[] stack : threadStacks) {
+                            if (stack == null || stack.length == 0) {
+                                continue;
+                            }
+
+                            // 1) Increment total-time counter for *every* frame
+                            for (StackTraceElement ste : stack) {
+                                String key = toMethodKey(ste);
+                                MethodStats ms = methodStats.get(key);
+                                if (ms == null) {
+                                    ms = new MethodStats();
+                                    methodStats.put(key, ms);
+                                }
+                                // total-time sample; isTop = false here
+                                ms.addSample(false, perThreadEnergy / threadStacks.size());
+                            }
+
+                            // 2) Choose a meaningful "top application" frame for self-time/invocations
+                            StackTraceElement topApp = null;
+                            for (StackTraceElement ste : stack) {
+                                String cls = ste.getClassName();
+                                if (!isLibraryClass(cls)) {
+                                    topApp = ste;
+                                    break;
+                                }
+                            }
+                            if (topApp == null) {
+                                // fall back to the real top frame if no app frame found
+                                topApp = stack[0];
+                            }
+
+                            String topKey = toMethodKey(topApp);
+                            MethodStats topMs = methodStats.get(topKey);
+                            if (topMs == null) {
+                                topMs = new MethodStats();
+                                methodStats.put(topKey, topMs);
+                            }
+                            topMs.addTopSample(perThreadEnergy / threadStacks.size());
+                        }
+                    }
+                }
+// === END SAMPLING STATS ===
+
+                status.setSamplingStats(methodStats);
+
                 // Now we have:
                 // CPU energy for JVM process
                 // CPU energy for all processes
@@ -307,15 +473,20 @@ public class MonitoringHandler implements Runnable {
                 }
 
                 Thread.sleep(sampleRateMilliseconds);
+            } catch (IOException exception) {
+                logger.log(Level.SEVERE, "IO error during sampling - continuing: {0}", exception.getMessage());
+                // DON'T KILL THE JVM - just log and continue sampling
+                // logger.throwing(getClass().getName(), "run", exception);
+                // System.exit(1);  â† DELETE THIS LINE
             } catch (InterruptedException exception) {
                 Thread.currentThread().interrupt();
-            } catch (IOException exception) {
-                logger.log(Level.SEVERE, "Cannot perform IO \"{0}\"", exception.getMessage());
-                logger.throwing(getClass().getName(), "run", exception);
-                System.exit(1);
             }
+
         }
+
+
     }
+
 
     /**
      * Performs the sampling step. Collects a set of stack traces for each thread.
@@ -351,7 +522,7 @@ public class MonitoringHandler implements Runnable {
         return result;
     }
 
-	  /**
+    /**
      * Writes the results. The filename is partially defined by the given
      * parameters.
      *
@@ -366,7 +537,7 @@ public class MonitoringHandler implements Runnable {
      * @throws IOException if an I/O error occurs while writing the file
      */
     public <K> void saveResults(Map<Thread, Map<K, Integer>> stats, Map<Long, Double> threadCpuTimePercentages,
-            ResultWriterConfiguration config) throws IOException {
+                                ResultWriterConfiguration config) throws IOException {
         for (final ResultWriter resultWriter : resultWriters) {
             resultWriter.setConfiguration(config);
         }
@@ -384,7 +555,7 @@ public class MonitoringHandler implements Runnable {
             resultWriter.closeTarget();
         }
     }
-    
+
     /**
      * Update method's consumed energy.
      *
@@ -407,6 +578,16 @@ public class MonitoringHandler implements Runnable {
                 if(totalEncounters >= Double.MIN_VALUE) {
                     methodPower = threadCpuTimePercentages.get(threadEntry.getKey().getId()) * (methodEntry.getValue() / totalEncounters);
                 }
+
+                if (scope == Scope.ALL) {
+                    MethodStats ms = methodStats.get(methodEntry.getKey());
+                    if (ms == null) {
+                        ms = new MethodStats();
+                        methodStats.put(methodEntry.getKey(), ms);
+                    }
+                    ms.energyJ += methodPower;
+                }
+
 
                 // Only of consumption evolution tracking is enabled
                 if (this.properties.trackConsumptionEvolution()) {
@@ -434,7 +615,7 @@ public class MonitoringHandler implements Runnable {
      *                                 consumption
      */
     private void updateCallTreesConsumedEnergy(Map<Thread, Map<CallTree, Integer>> stats,
-            Map<Long, Double> threadCpuTimePercentages, ObjDoubleConsumer<CallTree> callTreeConsumer) {
+                                               Map<Long, Double> threadCpuTimePercentages, ObjDoubleConsumer<CallTree> callTreeConsumer) {
         for (var entry : stats.entrySet()) {
             double totalEncounters = entry.getValue().values().stream().mapToDouble(i -> i).sum();
 
@@ -448,5 +629,25 @@ public class MonitoringHandler implements Runnable {
                 callTreeConsumer.accept(callTreeEntry.getKey(), stackTracePower);
             }
         }
+    }
+
+    public static String resolveMethodKey(String className, String methodName, int lineNumber) {
+        String coarseKey = className + "." + methodName;
+        return resolvedKeyCache.computeIfAbsent(coarseKey + ":" + lineNumber, k -> {
+            try {
+                String resolved = resolve(Class.forName(className), methodName, lineNumber);
+                if (resolved != null) {
+                    return resolved;
+                }
+            } catch (Exception e) {
+                return coarseKey;
+            }
+            return coarseKey;
+        });
+    }
+    private boolean isLibraryClass(String cls) {
+        return
+                cls.startsWith("javax.")
+                        || cls.startsWith("com.sun.");
     }
 }

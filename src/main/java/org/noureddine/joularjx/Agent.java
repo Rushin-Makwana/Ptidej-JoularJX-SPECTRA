@@ -1,14 +1,13 @@
 /*
- * Copyright (c) 2021-2026, Adel Noureddine, Université de Pau et des Pays de l'Adour.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the
- * GNU General Public License v3.0 only (GPL-3.0-only)
- * which accompanies this distribution, and is available at
- * https://www.gnu.org/licenses/gpl-3.0.en.html
- *
- * Author : Adel Noureddine
- */
-
+         * Copyright (c) 2021-2026, Adel Noureddine, Université de Pau et des Pays de l'Adour.
+         * All rights reserved. This program and the accompanying materials
+         * are made available under the terms of the
+         * GNU General Public License v3.0 only (GPL-3.0-only)
+         * which accompanies this distribution, and is available at
+         * [https://www.gnu.org/licenses/gpl-3.0.en.html](https://www.gnu.org/licenses/gpl-3.0.en.html)
+         *
+         * Author : Adel Noureddine
+         */
 package org.noureddine.joularjx;
 
 import java.lang.instrument.Instrumentation;
@@ -22,6 +21,7 @@ import java.util.logging.Logger;
 
 import org.noureddine.joularjx.cpu.Cpu;
 import org.noureddine.joularjx.cpu.CpuFactory;
+import org.noureddine.joularjx.monitor.MethodCallTransformer;
 import org.noureddine.joularjx.monitor.MonitoringHandler;
 import org.noureddine.joularjx.monitor.MonitoringStatus;
 import org.noureddine.joularjx.monitor.ShutdownHandler;
@@ -60,6 +60,7 @@ public class Agent {
      * @param inst JVM instrumentation
      */
     public static void premain(String args, Instrumentation inst) {
+
         Thread.currentThread().setName(NAME_THREAD_NAME);
         AgentProperties properties = new AgentProperties();
         JoularJXLogging.updateLevel(properties.getLoggerLevel());
@@ -68,10 +69,16 @@ public class Agent {
         logger.info("| JoularJX Agent Version 3.1.0    |");
         logger.info("+---------------------------------+");
 
+
+        inst.addTransformer(new MethodCallTransformer(), true);
+
+
+
         ThreadMXBean threadBean = createThreadBean();
 
         // Get Process ID of current application
-        long appPid = ProcessHandle.current().pid();
+//        long appPid = ProcessHandle.current().pid();
+        long appPid = 123;
 
         // Creating the required folders to store the result files generated later on
         final long currentTime = System.currentTimeMillis();
@@ -93,7 +100,7 @@ public class Agent {
         new Thread(monitoringHandler, COMPUTATION_THREAD_NAME).start();
         Runtime.getRuntime().addShutdownHook(new Thread(shutdownHandler));
     }
-  
+
     /**
      * Get all output classes from SPI
      * @param props application properties
@@ -113,7 +120,7 @@ public class Agent {
     }
 
     /**
-     * Creates and returns a ThreadMXBean. 
+     * Creates and returns a ThreadMXBean.
      * Checks if the Thread CPU Time is supported by the JVM and enables it if it is disabled.
      */
     private static ThreadMXBean createThreadBean() {
@@ -121,7 +128,7 @@ public class Agent {
         // Check if CPU Time measurement is supported by the JVM. Quit otherwise
         if (!threadBean.isThreadCpuTimeSupported()) {
             logger.log(Level.SEVERE, "Thread CPU Time is not supported on this Java Virtual Machine. Exiting...");
-            System.exit(1);
+//            System.exit(1);
         }
 
         // Enable CPU Time measurement if it is disabled
@@ -162,5 +169,8 @@ public class Agent {
      * Private constructor
      */
     private Agent() {
+    }
+    public static long getAppPid(){
+        return ProcessHandle.current().pid();
     }
 }

@@ -35,6 +35,9 @@ public class MonitoringStatus {
 
     private double totalConsumedEnergy;
 
+    private Map<String, MethodStats> samplingStats;
+
+
     /**
      * Constructor for the MonitoringStatus class. Initializes empty data structures and sets the total consumed energy to zero.
      */
@@ -192,4 +195,14 @@ public class MonitoringStatus {
     public Map<CallTree, Double> getFilteredCallTreesConsumedEnergy() {
         return this.filteredCallTreesConsumption;
     }
+
+    public Map<String, MethodStats> getSamplingStats() {
+        return this.samplingStats;
+    }
+
+
+    public void setSamplingStats(Map<String, MethodStats> samplingStats) {
+        this.samplingStats = samplingStats;
+    }
+
 }

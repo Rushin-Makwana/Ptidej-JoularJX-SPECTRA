@@ -22,6 +22,8 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.noureddine.joularjx.Agent;
+
 /**
  * Agent properties configured by the config.properties file
  */
@@ -535,5 +537,10 @@ public class AgentProperties {
      */
     public String loadJoularCoreRingBufferPath() {
         return properties.getProperty(JOULAR_CORE_RINGBUFFER_PATH_PROPERTY);
+    }
+
+    public static String getAgentJarPath() {
+        return Agent.class.getProtectionDomain()
+            .getCodeSource().getLocation().getPath();
     }
 }

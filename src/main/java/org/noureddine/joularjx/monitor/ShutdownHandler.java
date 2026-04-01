@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.noureddine.joularjx.Agent;
 import org.noureddine.joularjx.cpu.Cpu;
@@ -101,9 +104,72 @@ public class ShutdownHandler implements Runnable {
         } catch (final IOException exception) {
             // Continue shutting down
         }
+        try {
+            writeInstrumentedMethodsCsv();
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "Failed to write instrumented methods CSV", e);
+        }
 
         logger.log(Level.INFO, "Energy consumption of methods and filtered methods written to files");
     }
+    /**
+     * Writes a second CSV combining JoularJX energy with
+     * instrumented invocation counts and total time from MethodInstrumentation.
+     *
+     * File: joularJX-<pid>-instrumented-methods.csv
+     */
+    private void writeInstrumentedMethodsCsv() throws IOException {
+        // Get energy from MonitoringStatus (same map used for all-methods-energy.csv)
+        Map<String, Double> energyMap = status.getMethodsConsumedEnergy();
+
+        // Get instrumented stats (methodKey -> AtomicLong)
+        Map<String, AtomicLong> invMap   = MethodInstrumentation.getAllInvocations();
+        Map<String, AtomicLong> timeMapN = MethodInstrumentation.getAllTotalTimeNanos();
+
+        String fileName = String.format("Results/joularJX-%d-instrumented-methods.csv", appPid);
+        logger.info("Writing instrumented methods CSV: " + fileName);
+
+        try (PrintWriter out = new PrintWriter(new FileWriter(fileName))) {
+            // Header
+            out.println("MethodName,Energy(J),Invocations,TotalTime(ms)");
+
+            // Union of keys from energyMap and instrumentation maps
+            // (so a method with time but no energy, or vice versa, is still included)
+            java.util.Set<String> allKeys = new java.util.HashSet<>(energyMap.keySet());
+            allKeys.addAll(invMap.keySet());
+            allKeys.addAll(timeMapN.keySet());
+
+            for (String methodName : allKeys) {
+                double energy = energyMap.getOrDefault(methodName, 0.0);
+                long inv = 0L;
+                long totalTimeNs = 0L;
+
+                AtomicLong invVal = invMap.get(methodName);
+                if (invVal != null) {
+                    inv = invVal.get();
+                }
+                AtomicLong timeVal = timeMapN.get(methodName);
+                if (timeVal != null) {
+                    totalTimeNs = timeVal.get();
+                }
+
+                double totalTimeMs = totalTimeNs / 1_000_000.0;
+                if (energy == 0.0 && inv == 0L) {
+                    continue;
+                }
+
+//                if(energy >0.0 && inv > 0.0){
+                // Simple CSV escaping for quotes in method names
+                String safeName = "\"" + methodName.replace("\"", "\"\"") + "\"";
+
+                out.printf("%s,%.9f,%d,%.3f%n", safeName, energy, inv, totalTimeMs);
+//            }
+        }
+        }
+
+        logger.info("Instrumented methods CSV written: " + fileName);
+    }
+
 
     /**
      * Cleans a method name to make it suitable for inclusion in a filename
@@ -130,8 +196,6 @@ public class ShutdownHandler implements Runnable {
         // Sampling stats (may be null if sampling was disabled)
 //         samplingStats = status.getSamplingStats();
         long samplingPeriodMs = properties.stackMonitoringSampleRate();
-        logger.info("samplingStats size in saveResults = " +
-                (samplingStats == null ? "null" : samplingStats.size()));
         saveResults(consumedEnergyMap, config, samplingStats, samplingPeriodMs);
     }
 
@@ -180,28 +244,19 @@ public class ShutdownHandler implements Runnable {
                 }
             }
 
+            long instrInv = MethodInstrumentation.getInvocations(methodName);
+            long instrTimeNs = MethodInstrumentation.getTotalTimeNanos(methodName);
+
             // Derived metrics with sensible fallbacks
             double estInvocations;
             double selfTimeMs;
             double totalTimeMs;
-            logger.info("Using samplingPeriodMs=" + samplingPeriodMs + " from config");
-//            if (topSamples > 0 && sampleCount > 0) {
-                estInvocations =   (double) sampleCount ;
-                selfTimeMs     = topSamples * samplingPeriodMs;
-                totalTimeMs    = sampleCount * samplingPeriodMs;
-//
-//            }  else {
-//                // Energy-proportional fallback: scale by relative energy
-//                // Methods with energy >10% of max get 1-10 estInvocations
-//                logger.info("fallback");
-//                double relEnergy = energy / maxEnergy;
-//                estInvocations = Math.max(1.0, relEnergy * 10.0);
-//                selfTimeMs = samplingPeriodMs * estInvocations;
-//                totalTimeMs = samplingPeriodMs * (1.0 + relEnergy * 5.0);  // Slightly more total time
-//            }
+                estInvocations = (double) sampleCount;
+                selfTimeMs = topSamples * samplingPeriodMs;
+                totalTimeMs = sampleCount * samplingPeriodMs;
 
             for (final ResultWriter resultWriter : resultWriters) {
-                resultWriter.write("\"" + methodName.replace("\"", "\"\"") + "\"," ,
+                resultWriter.write("\"" + methodName.replace("\"", "\"\"") + "\"" ,
                         energy ,estInvocations ,  selfTimeMs , totalTimeMs);
 
             }

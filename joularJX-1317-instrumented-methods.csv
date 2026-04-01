@@ -1,0 +1,385 @@
+MethodName,Energy(J),Invocations,TotalTime(ms)
+"jdk.internal.classfile.impl.DirectCodeBuilder.loadLocal",0.006847508,0,0.000
+"java.io.RandomAccessFile.readBytes(byte[], int, int)",0.171187692,0,0.000
+"java.util.regex.Pattern.<init>(java.lang.String, int)",0.013695015,0,0.000
+"org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run()",0.001671808,0,0.000
+"java.security.SecureClassLoader.defineClass(java.lang.String, byte[], int, int, java.security.CodeSource)",0.178035199,0,0.000
+"java.util.ServiceLoader$ProviderImpl.get()",0.013695015,0,0.000
+"java.util.regex.CharPredicates.forUnicodeBlock(java.lang.String)",0.013695015,0,0.000
+"org.apache.maven.surefire.shared.lang3.Strings.startsWith(java.lang.CharSequence, java.lang.CharSequence)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.booter.Shutdown.valueOf(java.lang.String)",0.006847508,0,0.000
+"java.lang.Class.getMethodsRecursive(java.lang.String, java.lang.Class[], boolean, boolean)",0.027390031,0,0.000
+"jdk.internal.classfile.impl.AbstractPoolEntry$Utf8EntryImpl.writeTo(jdk.internal.classfile.impl.BufWriterImpl)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.util.ReflectionUtils.loadClass(java.lang.ClassLoader, java.lang.String)",0.013695015,0,0.000
+"java.util.jar.JarFile.getManifest()",0.013695015,0,0.000
+"org.apache.maven.surefire.api.testset.RunOrderParameters.<init>(java.lang.String, java.io.File, java.lang.Long)",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.spi.AbstractMasterProcessChannelProcessorFactory$1.run()",0.000021590,0,0.000
+"org.apache.maven.surefire.api.booter.ForkingReporterFactory.createTestReportListener()",0.006847508,0,0.000
+"org.apache.maven.surefire.api.booter.DumpErrorSingleton.createDumpFile(java.io.File, java.lang.String)",0.006847508,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory.sanitizedTargetClassName(java.lang.Class)",0.006847508,0,0.000
+"java.net.URL.openConnection()",0.006847508,0,0.000
+"java.lang.invoke.BoundMethodHandle$Species_L.copyWithExtendL(java.lang.invoke.MethodType, java.lang.invoke.LambdaForm, java.lang.Object)",0.006847508,0,0.000
+"java.net.URLStreamHandler.setURL(java.net.URL, java.lang.String, java.lang.String, int, java.lang.String, java.lang.String)",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.BooterDeserializer.getStartupConfiguration()",0.027390031,0,0.000
+"java.lang.ClassLoader.getClassLoadingLock(java.lang.String)",0.000021590,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.createProviderInCurrentClassloader()",0.143797661,0,0.000
+"java.util.ServiceLoader$ProviderImpl.newInstance()",0.013695015,0,0.000
+"java.lang.System$1.defineClass(java.lang.ClassLoader, java.lang.Class, java.lang.String, byte[], java.security.ProtectionDomain, boolean, int, java.lang.Object)",0.013695015,0,0.000
+"java.lang.Class.getConstructor",0.020542523,0,0.000
+"java.io.FilterInputStream.<init>(java.io.InputStream)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.cli.CommandLineOption.fromStrings(java.util.Collection)",0.006847508,0,0.000
+"java.io.FileInputStream.read(byte[], int, int)",0.001583818,0,0.000
+"java.lang.ClassLoader.getNamedPackage(java.lang.String, java.lang.Module)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectMethodBuilder.run(java.util.function.Consumer)",0.027390031,0,0.000
+"org.apache.maven.surefire.api.util.ReflectionUtils.instantiateOneArg(java.lang.ClassLoader, java.lang.String, java.lang.Class, java.lang.Object)",0.123255138,0,0.000
+"org.apache.maven.surefire.booter.ClasspathConfiguration.<init>(org.apache.maven.surefire.booter.PropertiesWrapper)",0.006847508,0,0.000
+"jdk.internal.loader.Resource.cachedInputStream()",0.020542523,0,0.000
+"jdk.internal.classfile.impl.StackMapGenerator.processMethod()",0.006847508,0,0.000
+"java.util.zip.ZipFile.getZipEntry(java.lang.String, int)",0.006847508,0,0.000
+"java.lang.ref.Reference$ReferenceHandler.run()",0.000355331,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator$3.accept(java.lang.classfile.ClassBuilder)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectMethodBuilder.withCode(java.lang.classfile.CodeModel, java.util.function.Consumer)",0.020542523,0,0.000
+"java.lang.Class.enumConstantDirectory()",0.013695015,0,0.000
+"java.lang.invoke.MethodHandle.asTypeUncached(java.lang.invoke.MethodType)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.util.internal.Channels.newChannel(java.io.InputStream, int)",0.006847508,0,0.000
+"java.util.zip.ZipFile$ZipFileInflaterInputStream.fill()",0.184882707,0,0.000
+"java.util.jar.Manifest.<init>(java.io.InputStream, java.lang.String)",0.013695015,0,0.000
+"java.util.zip.ZipFile$ZipFileInputStream.<init>(java.util.zip.ZipFile, byte[], int)",0.006847508,0,0.000
+"jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull(java.lang.String)",0.520469243,0,0.000
+"org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.<init>(org.apache.maven.surefire.api.provider.ProviderParameters, org.apache.maven.surefire.junitplatform.LauncherSessionFactory)",0.095865107,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory.spinInnerClass()",0.061627569,0,0.000
+"org.apache.maven.surefire.api.testset.TestListResolver.<init>(java.lang.String)",0.034237538,0,0.000
+"org.apache.maven.surefire.junitplatform.LauncherSessionFactory$$Lambda/0x0000000120057168.openSession",0.034237538,0,0.000
+"jdk.internal.classfile.impl.DirectCodeBuilder.constantPool()",0.006847508,0,0.000
+"java.lang.StringBuilder.append(java.lang.String)",0.006847508,0,0.000
+"org.apache.maven.surefire.shared.lang3.JavaVersion.<clinit>",0.013695015,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory.<init>(java.lang.invoke.MethodHandles$Lookup, java.lang.invoke.MethodType, java.lang.String, java.lang.invoke.MethodType, java.lang.invoke.MethodHandle, java.lang.invoke.MethodType, boolean, java.lang.Class[], java.lang.invoke.MethodType[])",0.006847508,0,0.000
+"java.util.jar.Manifest.read(java.io.InputStream, java.lang.String)",0.006847508,0,0.000
+"org.apache.maven.surefire.shared.lang3.math.NumberUtils.toFloat(java.lang.String, float)",0.006847508,0,0.000
+"java.lang.invoke.MethodHandles$Lookup.findStatic(java.lang.Class, java.lang.String, java.lang.invoke.MethodType)",0.006847508,0,0.000
+"java.util.concurrent.Executors.newScheduledThreadPool(int, java.util.concurrent.ThreadFactory)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectMethodBuilder.withCode(java.util.function.Consumer)",0.020542523,0,0.000
+"jdk.internal.classfile.impl.Util.writeList(jdk.internal.classfile.impl.BufWriterImpl, jdk.internal.classfile.impl.Util$Writable[], int)",0.006847508,0,0.000
+"jdk.internal.reflect.MethodHandleAccessorFactory.newConstructorAccessor(java.lang.reflect.Constructor)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.util.internal.Channels.newBufferedChannel(java.io.InputStream)",0.006847508,0,0.000
+"java.lang.invoke.MethodHandle.asType(java.lang.invoke.MethodType)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.BufWriterImpl.grow(int)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectCodeBuilder.build(jdk.internal.classfile.impl.MethodInfo, java.util.function.Consumer, jdk.internal.classfile.impl.SplitConstantPool, jdk.internal.classfile.impl.ClassFileImpl, java.lang.classfile.CodeModel)",0.020542523,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory.lambdaClassName(java.lang.Class)",0.006847508,0,0.000
+"java.lang.invoke.Invokers$Holder.invokeExact_MT",0.123255138,0,0.000
+"java.util.ServiceLoader$LazyClassPathLookupIterator.hasNextService()",0.034237538,0,0.000
+"java.util.zip.Inflater.inflate(byte[], int, int)",0.034296198,0,0.000
+"org.apache.maven.surefire.shared.lang3.JavaVersion.maxVersion()",0.013695015,0,0.000
+"java.util.HashMap.calculateHashMapCapacity(int)",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.stream.CommandDecoder.toMessage(org.apache.maven.surefire.api.booter.MasterProcessCommand, org.apache.maven.surefire.api.stream.AbstractStreamDecoder$Memento)",0.000029330,0,0.000
+"org.apache.maven.surefire.api.stream.AbstractStreamDecoder.read(java.nio.ByteBuffer, int, int)",0.001613148,0,0.000
+"jdk.internal.classfile.impl.UnboundAttribute$AdHocAttribute.writeTo(jdk.internal.classfile.impl.BufWriterImpl)",0.006847508,0,0.000
+"java.lang.Class.privateGetDeclaredConstructors(boolean)",0.020542523,0,0.000
+"org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.newFilters()",0.089017600,0,0.000
+"java.util.concurrent.Executors$RunnableAdapter.call()",0.000021590,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory.methodDesc(java.lang.invoke.MethodType)",0.006847508,0,0.000
+"java.lang.invoke.BoundMethodHandle$Species_LL.<init>",0.006847508,0,0.000
+"java.lang.String.replace(char, char)",0.013695015,0,0.000
+"org.apache.maven.surefire.booter.BooterDeserializer.deserialize()",0.061627569,0,0.000
+"java.lang.reflect.Constructor.newInstanceWithCaller(java.lang.Object[], boolean, java.lang.Class)",0.123255138,0,0.000
+"jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(java.lang.Object[])",0.116407630,0,0.000
+"java.lang.reflect.Array.newArray",0.006847508,0,0.000
+"jdk.internal.loader.BuiltinClassLoader.isSealed(java.lang.String, java.util.jar.Manifest)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectMethodBuilder.with(java.lang.classfile.MethodElement)",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.main(java.lang.String[])",0.677903259,0,0.000
+"java.lang.String.indexOf(int)",0.013695015,0,0.000
+"jdk.internal.loader.URLClassPath$JarLoader.getResource(java.lang.String)",0.041085046,0,0.000
+"java.lang.invoke.DirectMethodHandle$Holder.invokeStatic",0.075322584,0,0.000
+"java.lang.reflect.Method.acquireMethodAccessor()",0.006847508,0,0.000
+"org.apache.maven.surefire.api.testset.ResolvedTest.<init>",0.013695015,0,0.000
+"java.io.RandomAccessFile.read(byte[], int, int)",0.171187692,0,0.000
+"java.util.ServiceLoader$2.hasNext()",0.034237538,0,0.000
+"jdk.internal.classfile.impl.BufWriterImpl.writeUtfEntry(java.lang.String)",0.006847508,0,0.000
+"java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker)",0.000262972,0,0.000
+"java.lang.ClassLoader.defineClass(java.lang.String, byte[], int, int, java.security.ProtectionDomain)",0.178035199,0,0.000
+"java.util.zip.ZipFile$Source.readFullyAt(byte[], int, int, long)",0.130102646,0,0.000
+"java.lang.ref.Reference.waitForReferencePendingList",0.000355331,0,0.000
+"java.util.concurrent.FutureTask.runAndReset()",0.000021590,0,0.000
+"java.lang.ClassLoader.findBootstrapClassOrNull(java.lang.String)",0.027390031,0,0.000
+"java.lang.invoke.MethodHandle.setAsTypeCache(java.lang.invoke.MethodType)",0.006847508,0,0.000
+"java.util.regex.Pattern.compile(java.lang.String)",0.013695015,0,0.000
+"jdk.internal.ref.CleanerImpl$PhantomCleanableRef.<init>(java.lang.Object, java.lang.ref.Cleaner, java.lang.Runnable)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.cli.CommandLineOption.valueOf(java.lang.String)",0.006847508,0,0.000
+"java.util.ServiceLoader$1.hasNext()",0.034237538,0,0.000
+"java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run()",0.000021590,0,0.000
+"org.apache.maven.surefire.shared.lang3.SystemUtils.getOsNameMatches(java.lang.String)",0.013695015,0,0.000
+"org.apache.maven.surefire.booter.PropertiesWrapper.getClasspath(java.lang.String)",0.006847508,0,0.000
+"java.lang.invoke.LambdaForm.compileToBytecode()",0.006847508,0,0.000
+"java.lang.invoke.BoundMethodHandle.<init>(java.lang.invoke.MethodType, java.lang.invoke.LambdaForm)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectClassBuilder.build()",0.013695015,0,0.000
+"java.lang.classfile.ClassBuilder.withMethodBody(java.lang.String, java.lang.constant.MethodTypeDesc, int, java.util.function.Consumer)",0.020542523,0,0.000
+"org.apache.maven.surefire.api.stream.AbstractStreamDecoder.readMessageType(org.apache.maven.surefire.api.stream.AbstractStreamDecoder$Memento)",0.001613148,0,0.000
+"java.lang.invoke.LambdaForm$MH/0x0000000120058000.invoke",0.102712615,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.run(org.apache.maven.surefire.booter.ForkedBooter, java.lang.String[])",0.677903259,0,0.000
+"jdk.internal.classfile.impl.DirectMethodBuilder.with(java.lang.classfile.ClassFileElement)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.UnboundAttribute.writeTo(jdk.internal.classfile.impl.DirectMethodBuilder)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.booter.MasterProcessCommand.<clinit>()",0.006847508,0,0.000
+"jdk.internal.classfile.impl.StackMapGenerator.<init>(jdk.internal.classfile.impl.LabelContext, java.lang.constant.ClassDesc, java.lang.String, java.lang.constant.MethodTypeDesc, boolean, jdk.internal.classfile.impl.RawBytecodeHelper$CodeRange, jdk.internal.classfile.impl.SplitConstantPool, jdk.internal.classfile.impl.ClassFileImpl, java.util.List)",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.spi.AbstractMasterProcessChannelProcessorFactory.<init>()",0.013695015,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory$6.accept(java.lang.Object)",0.006847508,0,0.000
+"java.util.zip.InflaterInputStream.close()",0.006847508,0,0.000
+"org.apache.maven.surefire.shared.lang3.SystemUtils.isOsNameMatch(java.lang.String, java.lang.String)",0.013695015,0,0.000
+"java.net.URL.<init>(java.net.URL, java.lang.String, java.net.URLStreamHandler)",0.013695015,0,0.000
+"java.lang.invoke.MethodHandles$Lookup.getDirectMethodForConstant(byte, java.lang.Class, java.lang.invoke.MemberName)",0.006847508,0,0.000
+"java.util.concurrent.ConcurrentHashMap.addCount(long, int)",0.000021590,0,0.000
+"sun.net.www.protocol.jar.Handler.parseContextSpec(java.net.URL, java.lang.String)",0.006847508,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator$1.accept(java.lang.classfile.ClassBuilder)",0.006847508,0,0.000
+"java.lang.invoke.MethodHandle.maybeCustomize()",0.006847508,0,0.000
+"jdk.internal.ref.PhantomCleanable.<init>(java.lang.Object, java.lang.ref.Cleaner)",0.006847508,0,0.000
+"java.util.jar.Manifest.<init>",0.006847508,0,0.000
+"java.util.jar.Attributes.<init>()",0.006847508,0,0.000
+"java.lang.invoke.MethodHandles$Lookup.linkMethodHandleConstant(byte, java.lang.Class, java.lang.String, java.lang.Object)",0.006847508,0,0.000
+"java.lang.Class.privateGetDeclaredMethods(boolean)",0.027390031,0,0.000
+"java.lang.ClassLoader.defineClass0",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.lookupDecoderFactory(java.lang.String)",0.054780061,0,0.000
+"java.lang.ClassLoader.defineClass1",0.164340184,0,0.000
+"java.util.jar.Manifest.getEntries()",0.006847508,0,0.000
+"java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.<init>()",0.006847508,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator.methodSetup(java.lang.classfile.ClassBuilder, java.util.function.Consumer)",0.006847508,0,0.000
+"org.apache.maven.surefire.junitplatform.CancellationTokenAdapter.<clinit>()",0.006847508,0,0.000
+"java.util.jar.Manifest.<init>(java.util.jar.JarVerifier, java.io.InputStream, java.lang.String)",0.006847508,0,0.000
+"org.apache.maven.surefire.shared.lang3.SystemProperties.getProperty(java.lang.String, java.util.function.Supplier)",0.027390031,0,0.000
+"org.apache.maven.surefire.api.util.ReflectionUtils.invokeGetter(java.lang.Class, java.lang.Object, java.lang.String)",0.027390031,0,0.000
+"jdk.internal.classfile.impl.Util.writeAttribute(jdk.internal.classfile.impl.BufWriterImpl, java.lang.classfile.Attribute)",0.006847508,0,0.000
+"java.lang.Class.getConstructor0(java.lang.Class[], int)",0.020542523,0,0.000
+"jdk.internal.loader.BuiltinClassLoader.loadClassOrNull(java.lang.String, boolean)",0.554728371,0,0.000
+"org.apache.maven.surefire.api.stream.AbstractStreamDecoder.<clinit>()",0.006847508,0,0.000
+"java.lang.classfile.ClassFileBuilder.accept(java.lang.classfile.ClassFileElement)",0.006847508,0,0.000
+"jdk.internal.loader.ClassLoaders$BootClassLoader.loadClassOrNull(java.lang.String, boolean)",0.027390031,0,0.000
+"java.lang.System$In.read(byte[], int, int)",0.001583818,0,0.000
+"java.lang.StringBuilder.<init>()",0.006847508,0,0.000
+"java.lang.invoke.MethodHandles$Lookup.getDirectMethodCommon(byte, java.lang.Class, java.lang.invoke.MemberName, boolean, java.lang.invoke.MethodHandles$Lookup)",0.013695015,0,0.000
+"java.lang.classfile.CodeBuilder.invoke",0.006847508,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory$3.accept(java.lang.classfile.CodeBuilder)",0.013695015,0,0.000
+"jdk.internal.loader.BuiltinClassLoader.defineOrCheckPackage(java.lang.String, java.util.jar.Manifest, java.net.URL)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.BufWriterImpl.reserveSpace(int)",0.006847508,0,0.000
+"java.util.zip.ZipFile.getInputStream(java.util.zip.ZipEntry)",0.020542523,0,0.000
+"java.lang.invoke.DirectMethodHandle$Holder.newInvokeSpecial",0.116407630,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator.generateCustomizedCodeBytes()",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.listenToShutdownCommands(java.lang.String)",0.116407630,0,0.000
+"java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>(java.util.zip.ZipFile, java.util.zip.ZipFile$ZipFileInputStream, java.util.zip.ZipFile$CleanableResource, java.util.zip.Inflater, int)",0.013695015,0,0.000
+"org.apache.maven.surefire.api.testset.TestListResolver.<init>(java.util.Collection)",0.034237538,0,0.000
+"sun.management.ManagementFactoryHelper.getRuntimeMXBean()",0.006847508,0,0.000
+"jdk.internal.misc.Unsafe.allocateUninitializedArray(java.lang.Class, int)",0.006847508,0,0.000
+"java.lang.Class.getDeclaredMethods0",0.027390031,0,0.000
+"org.apache.maven.surefire.booter.stream.CommandDecoder.decode(org.apache.maven.surefire.api.stream.AbstractStreamDecoder$Memento)",0.001642478,0,0.000
+"java.util.ServiceLoader$LazyClassPathLookupIterator.parse(java.net.URL)",0.006847508,0,0.000
+"java.lang.Thread.run()",0.001934780,0,0.000
+"java.lang.Character$UnicodeBlock.<clinit>()",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.BooterDeserializer.deserialize",0.006847508,0,0.000
+"org.apache.maven.surefire.api.testset.TestListResolver.<clinit>()",0.034237538,0,0.000
+"java.lang.Class.forName(java.lang.String, boolean, java.lang.ClassLoader)",0.013695015,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator$4.accept(java.lang.Object)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.util.ReflectionUtils.getMethod(java.lang.Class, java.lang.String, java.lang.Class[])",0.027390031,0,0.000
+"java.lang.reflect.Constructor.acquireConstructorAccessor()",0.006847508,0,0.000
+"java.lang.management.ManagementFactory.getPlatformMXBean(java.lang.Class)",0.006847508,0,0.000
+"java.util.concurrent.ConcurrentHashMap.putIfAbsent(java.lang.Object, java.lang.Object)",0.000021590,0,0.000
+"java.util.jar.JavaUtilJarAccessImpl.entryFor(java.util.jar.JarFile, java.lang.String)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectCodeBuilder.loadLocal(java.lang.classfile.TypeKind, int)",0.006847508,0,0.000
+"java.lang.StringLatin1.indexOf(byte[], int, int, int)",0.013695015,0,0.000
+"java.util.zip.InflaterInputStream.read(byte[], int, int)",0.219178905,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory.buildCallSite()",0.061627569,0,0.000
+"jdk.internal.classfile.impl.Util$1WithCodeMethodHandler.accept(java.lang.classfile.MethodBuilder)",0.020542523,0,0.000
+"java.util.jar.Manifest.getTrustedAttributes(java.lang.String)",0.006847508,0,0.000
+"java.lang.invoke.DirectMethodHandle.make(byte, java.lang.Class, java.lang.invoke.MemberName, java.lang.Class)",0.006847508,0,0.000
+"jdk.internal.reflect.MethodHandleAccessorFactory.makeConstructorHandle(java.lang.invoke.MethodHandle)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectClassBuilder.<init>(jdk.internal.classfile.impl.SplitConstantPool, jdk.internal.classfile.impl.ClassFileImpl, java.lang.classfile.constantpool.ClassEntry)",0.006847508,0,0.000
+"java.lang.invoke.MethodHandleImpl.makePairwiseConvertByEditor(java.lang.invoke.MethodHandle, java.lang.invoke.MethodType, boolean, boolean)",0.006847508,0,0.000
+"java.lang.ClassLoader.findBootstrapClass",0.020542523,0,0.000
+"org.apache.maven.surefire.booter.spi.LegacyMasterProcessChannelProcessorFactory.createDecoder(org.apache.maven.surefire.api.fork.ForkNodeArguments)",0.041085046,0,0.000
+"sun.net.www.protocol.jar.Handler.openConnection(java.net.URL)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.util.internal.Channels$3.readImpl(java.nio.ByteBuffer)",0.001583818,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory$1.accept(java.lang.Object)",0.027390031,0,0.000
+"java.lang.invoke.MethodHandles$Lookup$ClassDefiner.defineClass(boolean, java.lang.Object)",0.013695015,0,0.000
+"jdk.internal.reflect.DirectConstructorHandleAccessor.invokeImpl",0.116407630,0,0.000
+"org.apache.maven.surefire.api.util.internal.DaemonThreadFactory.<clinit>()",0.006847508,0,0.000
+"java.lang.invoke.Invokers.checkCustomized(java.lang.invoke.MethodHandle)",0.006847508,0,0.000
+"java.lang.Class.getDeclaredConstructors0",0.020542523,0,0.000
+"jdk.internal.loader.URLClassPath$JarLoader.createResource(java.lang.String, java.util.jar.JarEntry)",0.020542523,0,0.000
+"java.io.BufferedInputStream.read(byte[], int, int)",0.003167636,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.flushEventChannelOnExit()",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectCodeBuilder$4.tryGenerateStackMaps(boolean, jdk.internal.classfile.impl.BufWriterImpl)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.stream.AbstractStreamDecoder.<init>(java.nio.channels.ReadableByteChannel, org.apache.maven.surefire.api.fork.ForkNodeArguments, java.util.Map)",0.006847508,0,0.000
+"java.net.URL.lowerCaseProtocol(java.lang.String)",0.006847508,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator$4.accept(java.lang.classfile.MethodBuilder)",0.006847508,0,0.000
+"jdk.internal.loader.BuiltinClassLoader.getAndVerifyPackage(java.lang.String, java.util.jar.Manifest, java.net.URL)",0.006847508,0,0.000
+"java.util.zip.ZipFile$ZipFileInputStream.initDataOffset()",0.143797661,0,0.000
+"java.util.Collections.emptyList()",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectClassBuilder.withMethod",0.027390031,0,0.000
+"java.lang.ClassLoader.loadClass(java.lang.String)",0.547880863,0,0.000
+"java.lang.invoke.MethodHandles$Lookup.getDirectMethod(byte, java.lang.Class, java.lang.invoke.MemberName, java.lang.invoke.MethodHandles$Lookup)",0.013695015,0,0.000
+"java.net.URLConnection.<init>(java.net.URL)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.AttributeHolder.withAttribute(java.lang.classfile.Attribute)",0.006847508,0,0.000
+"java.io.FileInputStream.readBytes",0.001583818,0,0.000
+"java.lang.invoke.MethodType.methodType(java.lang.Class, java.lang.Class[], boolean)",0.013695015,0,0.000
+"org.apache.maven.surefire.api.util.internal.AbstractNoninterruptibleReadableChannel.read(java.nio.ByteBuffer)",0.001583818,0,0.000
+"java.util.LinkedHashMap.newLinkedHashMap(int)",0.006847508,0,0.000
+"java.util.regex.Pattern.expr(java.util.regex.Pattern$Node)",0.013695015,0,0.000
+"java.lang.invoke.MethodTypeForm.canonicalize(java.lang.invoke.MethodType, int)",0.013695015,0,0.000
+"org.apache.maven.surefire.booter.spi.CommandChannelDecoder.<init>(java.nio.channels.ReadableByteChannel, org.apache.maven.surefire.api.fork.ForkNodeArguments)",0.027390031,0,0.000
+"org.apache.maven.surefire.api.booter.MasterProcessCommand.segmentsToCmds()",0.006847508,0,0.000
+"jdk.internal.reflect.MethodHandleAccessorFactory.newMethodAccessor(java.lang.reflect.Method, boolean)",0.006847508,0,0.000
+"java.lang.StringLatin1.replace(byte[], char, char)",0.013695015,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess()",0.273900307,0,0.000
+"java.util.concurrent.ThreadPoolExecutor$Worker.run()",0.000262972,0,0.000
+"org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(java.lang.Object)",0.130102646,0,0.000
+"jdk.internal.loader.Resource.getBytes()",0.246568936,0,0.000
+"java.util.jar.JarFile.getInputStream(java.util.zip.ZipEntry)",0.020542523,0,0.000
+"java.lang.invoke.Invokers.maybeCustomize(java.lang.invoke.MethodHandle)",0.006847508,0,0.000
+"java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>(java.util.zip.ZipFile, java.util.zip.ZipFile$ZipFileInputStream, java.util.zip.ZipFile$CleanableResource, int)",0.013695015,0,0.000
+"java.io.BufferedInputStream.read1(byte[], int, int)",0.003167636,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.isDebugging()",0.006847508,0,0.000
+"java.lang.StrictMath.floorOrCeil(double, double, double, double)",0.006847508,0,0.000
+"java.security.CodeSource.<init>(java.net.URL, java.security.CodeSigner[])",0.006847508,0,0.000
+"java.util.regex.Pattern.compile()",0.013695015,0,0.000
+"org.apache.maven.surefire.api.booter.DumpErrorSingleton.init(java.io.File, java.lang.String)",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.CommandReader.<init>",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.setupBooter(java.lang.String, java.lang.String, java.lang.String, java.lang.String)",0.404002952,0,0.000
+"java.util.regex.Pattern.sequence(java.util.regex.Pattern$Node)",0.013695015,0,0.000
+"java.lang.invoke.MethodHandleImpl.makePairwiseConvert(java.lang.invoke.MethodHandle, java.lang.invoke.MethodType, boolean)",0.006847508,0,0.000
+"java.lang.invoke.DirectMethodHandle.<init>(java.lang.invoke.MethodType, java.lang.invoke.LambdaForm, java.lang.invoke.MemberName, boolean)",0.006847508,0,0.000
+"java.util.jar.JarFile.getEntry(java.lang.String)",0.020542523,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.createForkingReporterFactory()",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.spi.LegacyMasterProcessChannelProcessorFactory.createEncoder(org.apache.maven.surefire.api.fork.ForkNodeArguments)",0.047932554,0,0.000
+"java.lang.System$1.findBootstrapClassOrNull(java.lang.String)",0.027390031,0,0.000
+"java.lang.Class.getMethod(java.lang.String, java.lang.Class[])",0.027390031,0,0.000
+"java.lang.Class.getEnumConstantsShared()",0.013695015,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory.generateConstructor(java.lang.classfile.ClassBuilder)",0.013695015,0,0.000
+"jdk.internal.classfile.impl.StackMapGenerator.generate()",0.006847508,0,0.000
+"java.util.jar.Manifest.getAttributes(java.lang.String)",0.006847508,0,0.000
+"java.net.URLConnection.getDefaultUseCaches(java.lang.String)",0.006847508,0,0.000
+"java.util.jar.Manifest$FastInputStream.<init>(java.io.InputStream, int)",0.006847508,0,0.000
+"jdk.internal.misc.InnocuousThread.run()",0.000241382,0,0.000
+"java.lang.Class.forName0",0.013695015,0,0.000
+"java.lang.StringConcatHelper.newArray(int)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.stream.AbstractStreamDecoder.read(org.apache.maven.surefire.api.stream.AbstractStreamDecoder$Memento, int)",0.001613148,0,0.000
+"org.apache.maven.surefire.booter.spi.CommandChannelDecoder.decode()",0.001671808,0,0.000
+"sun.launcher.LauncherHelper.checkAndLoadMain(boolean, int, java.lang.String)",0.006847508,0,0.000
+"java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[])",0.013695015,0,0.000
+"org.apache.maven.surefire.booter.stream.CommandDecoder.<init>(java.nio.channels.ReadableByteChannel, org.apache.maven.surefire.api.fork.ForkNodeArguments)",0.013695015,0,0.000
+"java.lang.Thread.runWith(java.lang.Object, java.lang.Runnable)",0.001934780,0,0.000
+"java.lang.invoke.MethodHandleNatives.linkCallSite(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object[])",0.068475077,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory$1.accept(java.lang.classfile.ClassBuilder)",0.027390031,0,0.000
+"java.lang.invoke.MethodHandleImpl$1.findStatic(java.lang.Class, java.lang.String, java.lang.invoke.MethodType)",0.006847508,0,0.000
+"jdk.internal.loader.BuiltinClassLoader.loadClassOrNull(java.lang.String)",0.034237538,0,0.000
+"jdk.internal.reflect.DirectMethodHandleAccessor.invoke(java.lang.Object, java.lang.Object[])",0.006847508,0,0.000
+"java.lang.Float.parseFloat(java.lang.String)",0.006847508,0,0.000
+"java.io.RandomAccessFile.readBytes0",0.171187692,0,0.000
+"java.lang.invoke.CallSite.makeSite(java.lang.invoke.MethodHandle, java.lang.String, java.lang.invoke.MethodType, java.lang.Object, java.lang.Class)",0.068475077,0,0.000
+"java.util.ServiceLoader$LazyClassPathLookupIterator.nextProviderClass()",0.013695015,0,0.000
+"java.lang.invoke.MethodHandleImpl.makePairwiseConvert(java.lang.invoke.MethodHandle, java.lang.invoke.MethodType, boolean, boolean)",0.006847508,0,0.000
+"java.util.regex.Pattern.family(boolean, boolean)",0.013695015,0,0.000
+"java.util.zip.ZipFile$Source.readAt(byte[], int, int, long)",0.041085046,0,0.000
+"java.net.URLStreamHandler.setURL(java.net.URL, java.lang.String, java.lang.String, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)",0.006847508,0,0.000
+"org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.newConfigurationParameters()",0.006847508,0,0.000
+"java.util.jar.JarFile.getJarEntry(java.lang.String)",0.020542523,0,0.000
+"java.lang.reflect.Constructor.newInstance(java.lang.Object[])",0.123255138,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.createExitHandler(org.apache.maven.surefire.booter.PpidChecker)",0.006847508,0,0.000
+"jdk.internal.reflect.ReflectionFactory.newConstructorAccessor(java.lang.reflect.Constructor)",0.006847508,0,0.000
+"org.apache.maven.surefire.shared.lang3.JavaVersion.toFloatVersion(java.lang.String)",0.013695015,0,0.000
+"jdk.internal.loader.BuiltinClassLoader.defineClass(java.lang.String, jdk.internal.loader.Resource)",0.472536689,0,0.000
+"java.util.jar.JarFile.getManifestFromReference()",0.013695015,0,0.000
+"java.lang.Math.ceil(double)",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.spi.AbstractMasterProcessChannelProcessorFactory.schedulePeriodicFlusher(int, org.apache.maven.surefire.api.util.internal.WritableBufferedByteChannel)",0.006847508,0,0.000
+"java.lang.ProcessHandleImpl.waitForProcessExit0",0.000241382,0,0.000
+"java.lang.Class.getMethod0(java.lang.String, java.lang.Class[])",0.027390031,0,0.000
+"java.lang.invoke.MethodTypeForm.findForm(java.lang.invoke.MethodType)",0.013695015,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory.generateInnerClass()",0.061627569,0,0.000
+"java.lang.StrictMath.ceil(double)",0.006847508,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory$3.accept(java.lang.Object)",0.013695015,0,0.000
+"jdk.internal.classfile.impl.DirectMethodBuilder.writeTo(jdk.internal.classfile.impl.BufWriterImpl)",0.006847508,0,0.000
+"java.util.ServiceLoader$LazyClassPathLookupIterator.hasNext()",0.034237538,0,0.000
+"java.util.ServiceLoader$2.next()",0.013695015,0,0.000
+"java.lang.invoke.MethodHandleNatives.linkMethodHandleConstant(java.lang.Class, int, java.lang.Class, java.lang.String, java.lang.Object)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.StackMapGenerator$Frame.setLocalsFromArg(java.lang.String, java.lang.constant.MethodTypeDesc, boolean, jdk.internal.classfile.impl.StackMapGenerator$Type)",0.006847508,0,0.000
+"org.apache.maven.surefire.shared.lang3.function.Suppliers.<clinit>()",0.006847508,0,0.000
+"org.apache.maven.surefire.junitplatform.RunListenerAdapter.<init>",0.006847508,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator.addMethod(java.lang.classfile.ClassBuilder, boolean)",0.006847508,0,0.000
+"java.lang.classfile.ClassBuilder.withMethod(java.lang.String, java.lang.constant.MethodTypeDesc, int, java.util.function.Consumer)",0.027390031,0,0.000
+"java.net.URL.<init>(java.net.URL, java.lang.String)",0.020542523,0,0.000
+"java.util.concurrent.ConcurrentHashMap.putVal(java.lang.Object, java.lang.Object, boolean)",0.000021590,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator.classFileSetup(java.util.function.Consumer)",0.006847508,0,0.000
+"jdk.internal.loader.ClassLoaders$AppClassLoader.defineOrCheckPackage(java.lang.String, java.util.jar.Manifest, java.net.URL)",0.006847508,0,0.000
+"java.lang.ref.Cleaner.register(java.lang.Object, java.lang.Runnable)",0.006847508,0,0.000
+"jdk.internal.reflect.MethodHandleAccessorFactory.getDirectMethod(java.lang.reflect.Method, boolean)",0.006847508,0,0.000
+"java.lang.AbstractStringBuilder.append(java.lang.String)",0.006847508,0,0.000
+"java.lang.invoke.LambdaMetafactory.metafactory(java.lang.invoke.MethodHandles$Lookup, java.lang.String, java.lang.invoke.MethodType, java.lang.invoke.MethodType, java.lang.invoke.MethodHandle, java.lang.invoke.MethodType)",0.068475077,0,0.000
+"java.util.jar.JavaUtilJarAccessImpl.getTrustedAttributes(java.util.jar.Manifest, java.lang.String)",0.006847508,0,0.000
+"org.apache.maven.surefire.api.report.Stoppable.<clinit>()",0.027390031,0,0.000
+"jdk.internal.classfile.impl.StackMapGenerator.of",0.006847508,0,0.000
+"java.util.zip.ZipFile$ZipFileInflaterInputStream.close()",0.006847508,0,0.000
+"java.lang.reflect.Array.newInstance(java.lang.Class, int)",0.006847508,0,0.000
+"java.lang.ref.Reference.processPendingReferences()",0.000355331,0,0.000
+"java.lang.Enum.valueOf(java.lang.Class, java.lang.String)",0.013695015,0,0.000
+"java.util.jar.Manifest$FastInputStream.<init>(java.io.InputStream)",0.006847508,0,0.000
+"java.net.JarURLConnection.<init>(java.net.URL)",0.006847508,0,0.000
+"java.util.Arrays.copyOf(java.lang.Object[], int)",0.006847508,0,0.000
+"jdk.internal.loader.URLClassPath.getResource(java.lang.String)",0.041085046,0,0.000
+"java.lang.ClassLoader.checkName(java.lang.String)",0.013695015,0,0.000
+"org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.<init>(org.apache.maven.surefire.api.provider.ProviderParameters)",0.102712615,0,0.000
+"sun.net.www.protocol.jar.JarURLConnection.<init>(java.net.URL, sun.net.www.protocol.jar.Handler)",0.006847508,0,0.000
+"java.util.zip.ZipUtils.LOCSIG(byte[])",0.006847508,0,0.000
+"java.lang.invoke.LambdaForm.prepare()",0.013695015,0,0.000
+"java.lang.management.ManagementFactory.getRuntimeMXBean()",0.006847508,0,0.000
+"java.util.concurrent.ConcurrentHashMap.transfer(java.util.concurrent.ConcurrentHashMap$Node[], java.util.concurrent.ConcurrentHashMap$Node[])",0.000021590,0,0.000
+"jdk.internal.classfile.impl.AttributeHolder.writeTo(jdk.internal.classfile.impl.BufWriterImpl)",0.006847508,0,0.000
+"java.util.Arrays.copyOf(java.lang.Object[], int, java.lang.Class)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.ClassFileImpl.build(java.lang.classfile.constantpool.ClassEntry, java.lang.classfile.constantpool.ConstantPoolBuilder, java.util.function.Consumer)",0.054780061,0,0.000
+"java.lang.invoke.MethodHandleNatives.findMethodHandleType(java.lang.Class, java.lang.Class[])",0.013695015,0,0.000
+"java.lang.invoke.BoundMethodHandle$Species_LL.make",0.006847508,0,0.000
+"java.lang.StringLatin1.indexOfChar(byte[], int, int, int)",0.013695015,0,0.000
+"java.util.ServiceLoader.getConstructor(java.lang.Class)",0.020542523,0,0.000
+"jdk.internal.loader.URLClassPath$JarLoader$1.getBytes()",0.246568936,0,0.000
+"java.util.concurrent.ScheduledThreadPoolExecutor.<init>(int, java.util.concurrent.ThreadFactory)",0.006847508,0,0.000
+"java.util.zip.ZipFile$ZipFileInputStream.read(byte[], int, int)",0.184882707,0,0.000
+"org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.prepareFailFastSupport(org.apache.maven.surefire.junitplatform.CancellationTokenAdapter, org.apache.maven.surefire.api.report.TestReportListener)",0.027390031,0,0.000
+"org.apache.maven.surefire.api.testset.TestListResolver.resolveTestRequest(java.lang.String, org.apache.maven.surefire.api.testset.IncludedExcludedPatterns, java.util.Collection, java.util.Collection)",0.027390031,0,0.000
+"jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl",0.006847508,0,0.000
+"java.util.zip.Inflater.inflateBytesBytes",0.034266868,0,0.000
+"org.apache.maven.surefire.junitplatform.LauncherSessionFactory.lambda$static$0(org.apache.maven.surefire.junitplatform.CancellationTokenAdapter)",0.034237538,0,0.000
+"java.lang.ClassLoader.preDefineClass(java.lang.String, java.security.ProtectionDomain)",0.006847508,0,0.000
+"java.util.jar.JarFile.entryFor(java.lang.String)",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.ForkedBooter.execute()",0.273900307,0,0.000
+"jdk.internal.loader.BuiltinClassLoader.loadClass(java.lang.String, boolean)",0.547880863,0,0.000
+"sun.net.www.protocol.jar.Handler.parseURL(java.net.URL, java.lang.String, int, int)",0.013695015,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator.generateCustomizedCode(java.lang.invoke.LambdaForm, java.lang.invoke.MethodType)",0.006847508,0,0.000
+"java.util.jar.JarFile$JarFileEntry.<init>(java.util.jar.JarFile, java.lang.String)",0.006847508,0,0.000
+"java.io.RandomAccessFile.readFully(byte[], int, int)",0.130102646,0,0.000
+"org.apache.maven.surefire.shared.lang3.SystemUtils.<clinit>()",0.082170092,0,0.000
+"org.apache.maven.surefire.shared.lang3.SystemProperties.getFileEncoding()",0.034237538,0,0.000
+"sun.management.spi.PlatformMBeanProvider$PlatformComponent.getMBeans(java.lang.Class)",0.006847508,0,0.000
+"org.apache.maven.surefire.shared.lang3.SystemProperties.getProperty(java.lang.String)",0.034237538,0,0.000
+"java.lang.invoke.BootstrapMethodInvoker.invoke(java.lang.Class, java.lang.invoke.MethodHandle, java.lang.String, java.lang.Object, java.lang.Object, java.lang.Class)",0.068475077,0,0.000
+"jdk.internal.classfile.impl.AbstractDirectBuilder.writeAttribute(java.lang.classfile.Attribute)",0.006847508,0,0.000
+"java.lang.ProcessHandleImpl$1.run()",0.000241382,0,0.000
+"java.lang.management.DefaultPlatformMBeanProvider$7.nameToMBeanMap",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectCodeBuilder$4.generateStackMaps(jdk.internal.classfile.impl.BufWriterImpl)",0.006847508,0,0.000
+"java.lang.ClassLoader.postDefineClass(java.lang.Class, java.security.ProtectionDomain)",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.spi.LegacyMasterProcessChannelProcessorFactory.<init>()",0.013695015,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator$1.accept(java.lang.Object)",0.006847508,0,0.000
+"org.apache.maven.surefire.booter.PpidChecker.<clinit>()",0.095865107,0,0.000
+"java.lang.invoke.InvokerBytecodeGenerator$3.accept(java.lang.Object)",0.006847508,0,0.000
+"java.io.BufferedInputStream.fill()",0.001583818,0,0.000
+"jdk.internal.reflect.ReflectionFactory.newMethodAccessor(java.lang.reflect.Method, boolean)",0.006847508,0,0.000
+"jdk.internal.loader.URLClassPath$JarLoader$1.getManifest()",0.013695015,0,0.000
+"java.util.jar.JarFile.isMultiRelease()",0.013695015,0,0.000
+"jdk.internal.loader.URLClassPath$JarLoader$1.getInputStream()",0.020542523,0,0.000
+"jdk.internal.classfile.impl.Util$1WithCodeMethodHandler.accept(java.lang.Object)",0.020542523,0,0.000
+"org.apache.maven.surefire.api.util.internal.Channels$4.countBufferOverflows()",0.000021590,0,0.000
+"jdk.internal.loader.Resource.getByteBuffer()",0.020542523,0,0.000
+"jdk.internal.classfile.impl.SplitConstantPool.writeTo(jdk.internal.classfile.impl.BufWriterImpl)",0.006847508,0,0.000
+"java.lang.invoke.MethodHandle.<init>(java.lang.invoke.MethodType, java.lang.invoke.LambdaForm)",0.013695015,0,0.000
+"java.lang.invoke.MethodHandleNatives.linkCallSiteImpl(java.lang.Class, java.lang.invoke.MethodHandle, java.lang.String, java.lang.invoke.MethodType, java.lang.Object, java.lang.Object[])",0.068475077,0,0.000
+"java.util.zip.ZipFile.getEntry(java.lang.String)",0.006847508,0,0.000
+"sun.net.util.URLUtil.urlNoFragString(java.net.URL)",0.006847508,0,0.000
+"sun.launcher.LauncherHelper.loadMainClass(int, java.lang.String)",0.006847508,0,0.000
+"java.util.jar.Attributes.<init>(int)",0.006847508,0,0.000
+"java.lang.invoke.InnerClassLambdaMetafactory$6.accept(java.lang.classfile.CodeBuilder)",0.006847508,0,0.000
+"jdk.internal.classfile.impl.DirectCodeBuilder$4.writeBody(jdk.internal.classfile.impl.BufWriterImpl)",0.006847508,0,0.000
+"org.apache.maven.surefire.shared.lang3.StringUtils.<clinit>()",0.013695015,0,0.000
+"java.lang.invoke.MethodType.makeImpl(java.lang.Class, java.lang.Class[], boolean)",0.013695015,0,0.000
